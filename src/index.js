@@ -5,10 +5,10 @@ import express from "express"
 import "./db/mongoose.js"
 import userRouter from "./routers/user.js"
 import taskRouter from './routers/task.js '
-
+import cors from "cors";
 
 const app = express()
-const port = process.env.PORT
+const port = process.env.PORT || 3000
 
 //use of middleware :  new request ---> do something ---> run route handler
 // app.use((req, res, next) => {
@@ -23,7 +23,13 @@ const port = process.env.PORT
 
 //     res.status(503).send('Site is currently down. Check back soon!!')   //for when site is down for maintenance, no requests can be used
 // })
-
+app.use(
+    cors({
+        origin: process.env.FRONTEND_URL || "http://localhost:5173", // Allow requests from your frontend
+        methods: "GET,POST,PATCH,PUT,DELETE", // Allowed request methods
+        credentials: true, // Allow cookies & authentication headers
+    })
+);
 
 app.use(express.json())         //in postman under body data was sent but in order to catch it we use this line
 
@@ -125,5 +131,3 @@ app.listen(port, () => {
 // }, (error, req, res, next) => {                 //used to handle errors express
 //     res.status(400).send({ error: error.message })
 // })
-
-//second api key ===> bdf41f4a3e86f412a596eb0ee357efec-3af52e3b-676fb9d0

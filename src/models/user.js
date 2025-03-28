@@ -35,6 +35,7 @@ const userSchema = new mongoose.Schema({ // we used 'User' as the name but once 
     password: {
         type: String,
         minlength: 7,
+        required: true,
         trim: true,
         validate(value) {
             if (value.toLowerCase().includes('password')) {         //toLowerCase is used bcoz the user may type "PASSWORD" yk :)

@@ -1,7 +1,7 @@
 import express from 'express'
 import User from '../models/user.js'
 import auth from "../middleware/auth.js"
-import { sendWelcomeEmail, sendDeletionEmail } from '../../emails/accout.js'
+// import { sendWelcomeEmail, sendDeletionEmail } from '../../emails/accout.js'
 import multer from 'multer'
 import sharp from 'sharp'
 const router = new express.Router()
@@ -12,6 +12,10 @@ const router = new express.Router()
 //initially all these were inside index.js with app.post, app.get,...
 // router
 
+import dotenv from "dotenv";
+import path from "path";
+
+dotenv.config({ path: path.resolve("config/dev.env") });
 
 
 router.post('/users', async (req, res) => {          //creating a new user here
@@ -28,10 +32,12 @@ router.post('/users', async (req, res) => {          //creating a new user here
     // })
 
     const user = new User(req.body)
+    console.log("Incoming Request Body:", req.body);
     try {
         await user.save()
-        sendWelcomeEmail(user.email, user.name)
+        // sendWelcomeEmail(user.email, user.name)
         const token = await user.generateAuthToken()
+
         res.status(201).send({ user: user, token: token })
     } catch (e) {
         res.status(400).send(e)
@@ -166,8 +172,8 @@ router.delete('/users/me', auth, async (req, res) => {
         //     return res.status(404).send()
         // }
         await req.user.deleteOne()
-        sendDeletionEmail(req.user.email, req.user.name)
-        res.send(req.user)
+        // sendDeletionEmail(req.user.email, req.user.name)
+        res.status(200).json({ message: "Account deleted successfully" }).send();
     } catch (e) {
         res.status(500).send()
     }
@@ -194,11 +200,27 @@ router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) 
     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
     // req.user.avatar = req.file.buffer
     req.user.avatar = buffer
+    console.log("Avatar Buffer:", buffer); // Check if data is received
     await req.user.save()
     res.send()
 }, (error, req, res, next) => {
     res.status(400).send({ error: error.message })
 })
+
+router.get("/users/:id/avatar", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user || !user.avatar) {
+            throw new Error();
+        }
+
+        res.set("Content-Type", "image/png"); // Set content type
+        res.send(user.avatar); // Send binary data as response
+    } catch (error) {
+        res.status(404).send();
+    }
+});
+
 
 router.delete('/users/me/avatar', auth, async (req, res) => {
     req.user.avatar = undefined

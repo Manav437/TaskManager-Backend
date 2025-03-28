@@ -2,9 +2,7 @@ import express from 'express'
 import Task from '../models/task.js'
 import auth from '../middleware/auth.js'
 
-
 const router = new express.Router()
-
 
 router.post('/tasks', auth, async (req, res) => {     //create task
     // console.log(req.body)                //this will show in terminal in VS code

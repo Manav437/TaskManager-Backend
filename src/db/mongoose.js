@@ -16,7 +16,7 @@
 import mongoose, { mongo } from "mongoose"
 import validator from 'validator'
 mongoose.connect(process.env.MONGODB_URL)
-
+// mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api')
 //npm validator is a famous library that you can use for email, cards, etc validation :) 
 
 //const User = mongoose.model('', {...}) was cut and pasted in /db/user.js
