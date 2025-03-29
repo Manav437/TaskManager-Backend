@@ -8,6 +8,14 @@ import taskRouter from './routers/task.js '
 import cors from "cors";
 
 const app = express()
+
+app.use(express.static(path.join(__dirname, "frontend/build"))); // Serve frontend
+
+// Handle React Routes (SPA)
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend/build", "index.html"));
+});
+
 const port = process.env.PORT || 3000
 
 //use of middleware :  new request ---> do something ---> run route handler
@@ -23,6 +31,7 @@ const port = process.env.PORT || 3000
 
 //     res.status(503).send('Site is currently down. Check back soon!!')   //for when site is down for maintenance, no requests can be used
 // })
+
 app.use(
     cors({
         origin: "https://taskmanager-frontend-2qcg.onrender.com", // Allow requests from your frontend
