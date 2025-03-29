@@ -1,11 +1,16 @@
 // /Users/manavgusain/mongoDB/bin/mongod --dbpath=/Users/manavgusain/mongoDB-data
 
 //initialising point of our app
+import path from "path"
+import { fileURLToPath } from "url"
 import express from "express"
 import "./db/mongoose.js"
 import userRouter from "./routers/user.js"
 import taskRouter from './routers/task.js '
 import cors from "cors";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express()
 
