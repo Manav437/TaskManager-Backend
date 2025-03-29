@@ -31,6 +31,10 @@ app.use(
     })
 );
 
+app.get('/', (req, res) => {
+    res.send('Backend is running!');
+});
+
 app.use(express.json())         //in postman under body data was sent but in order to catch it we use this line
 
 //router example---> how to use router
