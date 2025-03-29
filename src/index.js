@@ -25,7 +25,7 @@ const port = process.env.PORT || 3000
 // })
 app.use(
     cors({
-        origin: process.env.FRONTEND_URL || "https://taskmanager-frontend-2qcg.onrender.com", // Allow requests from your frontend
+        origin: "https://taskmanager-frontend-2qcg.onrender.com", // Allow requests from your frontend
         methods: "GET,POST,PATCH,PUT,DELETE", // Allowed request methods
         credentials: true, // Allow cookies & authentication headers
     })
