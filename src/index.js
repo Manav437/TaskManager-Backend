@@ -8,10 +8,7 @@ import taskRouter from './routers/task.js '
 import cors from "cors";
 
 
-
 const app = express()
-
-
 const port = process.env.PORT || 3000
 
 //use of middleware :  new request ---> do something ---> run route handler
@@ -35,6 +32,14 @@ app.use(
         credentials: true, // Allow cookies & authentication headers
     })
 );
+
+// app.use(
+//     cors({
+//         origin: "http://localhost:5173",
+//         methods: "GET,POST,PATCH,PUT,DELETE",
+//         credentials: true,
+//     })
+// );
 
 app.get('/', (req, res) => {
     res.send('Backend is running!');

@@ -45,8 +45,8 @@ router.get('/tasks', auth, async (req, res) => {          //search tasks
     // })
     const match = {}
     const sort = {}
-    if (req.query.completed) {
-        match.completed = req.query.completed === 'true'        //query will either have true or false, but we will get that as a string thats why we need to convert it to boolean
+    if (req.query.status) {
+        match.status = req.query.status       //query will either have true or false, but we will get that as a string thats why we need to convert it to boolean
     }
 
     if (req.query.sortBy) {
@@ -107,7 +107,7 @@ router.get('/tasks/:id', auth, async (req, res) => {          //search a particu
 router.patch('/tasks/:id', auth, async (req, res) => {            //update task
 
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['description', 'completed']
+    const allowedUpdates = ['description', 'status']
     const isValidOperation = updates.every((update) => {
         return allowedUpdates.includes(update)
     })

@@ -1,9 +1,9 @@
 import express from 'express'
 import User from '../models/user.js'
 import auth from "../middleware/auth.js"
-// import { sendWelcomeEmail, sendDeletionEmail } from '../../emails/accout.js'
-import multer from 'multer'
-import sharp from 'sharp'
+import { sendWelcomeEmail, sendDeletionEmail } from '../../emails/accout.js'
+import multer from 'multer'         //file uploads
+import sharp from 'sharp'           //image processing
 const router = new express.Router()
 
 // router.get('/test', (req, res) => {
@@ -35,7 +35,7 @@ router.post('/users', async (req, res) => {          //creating a new user here
     console.log("Incoming Request Body:", req.body);
     try {
         await user.save()
-        // sendWelcomeEmail(user.email, user.name)
+        sendWelcomeEmail(user.email, user.name)
         const token = await user.generateAuthToken()
 
         res.status(201).send({ user: user, token: token })
@@ -186,7 +186,7 @@ const upload = multer({
         fileSize: 1000000,
     },
     fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {            //regex pattern
             return cb(new Error('Please upload an image!'))
         }
 
@@ -228,19 +228,19 @@ router.delete('/users/me/avatar', auth, async (req, res) => {
     res.send()
 })
 
-router.get('/users/:id/avatar', async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id)
+// router.get('/users/:id/avatar', async (req, res) => {
+//     try {
+//         const user = await User.findById(req.params.id)
 
-        if (!user || !user.avatar) {
-            throw new Error()
-        }
+//         if (!user || !user.avatar) {
+//             throw new Error()
+//         }
 
-        res.set('Content-Type', 'image/png')
-        res.send(user.avatar)
-    } catch (e) {
-        res.status(404).send()
-    }
-})
+//         res.set('Content-Type', 'image/png')
+//         res.send(user.avatar)
+//     } catch (e) {
+//         res.status(404).send()
+//     }
+// })
 
 export default router

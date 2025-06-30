@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({ // we used 'User' as the name but once 
     name: {                                 //mongoose lowercases it and pluralizes also to both user and task
         type: String,
         required: true,              //this is a validator, has to provided by the user
-        trim: true                      //trim any whitespaces
+        trim: true                      //trim any whitespaces    
     },
     email: {
         type: String,
@@ -62,7 +62,6 @@ userSchema.virtual('tasks', {
     ref: 'Task',
     localField: '_id',                  //these field are mentioned to establish relationship b/w task and user
     foreignField: 'owner'
-
 })
 
 // used to not show password and token to the user, only send basic info back
@@ -98,7 +97,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
     if (!user) {
         throw new Error('Unable to login!')
     }
-    const isMatch = bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
         throw new Error('Unable to login!')
@@ -114,7 +113,7 @@ userSchema.pre('save', async function (next) {          //'save' is the name of 
     // therefore, updation done in /router/user.js
 
     if (user.isModified('password')) {
-        user.password = bcrypt.hash(user.password, 8)
+        user.password = await bcrypt.hash(user.password, 8)
     }
     next()
 })
@@ -129,3 +128,6 @@ userSchema.pre('remove', async function (next) {
 
 const User = mongoose.model('User', userSchema)
 export default User;
+
+//mongoose
+//User -> user -> users
