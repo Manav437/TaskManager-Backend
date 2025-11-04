@@ -6,37 +6,33 @@
 //
 //      -Update  PATCH   /tasks/:id
 //
-//      -Delete  DELETE  /tasks/:id 
-
+//      -Delete  DELETE  /tasks/:id
 
 //npm i nodemon --save-dev  (installed as dev dependency)
 
 //npm i express
-import path from "path"
+import path from "path";
 import dotenv from "dotenv";
-import mongoose, { mongo } from "mongoose"
-import validator from 'validator'
+import mongoose, { mongo } from "mongoose";
+import validator from "validator";
 
 // dotenv.config();
 
 dotenv.config({ path: path.resolve("config/dev.env") });
 console.log("Mongo URI:", process.env.MONGODB_URL);
-mongoose.connect(process.env.MONGODB_URL)
+mongoose.connect(process.env.MONGODB_URL);
 // mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api')
-//npm validator is a famous library that you can use for email, cards, etc validation :) 
+//npm validator is a famous library that you can use for email, cards, etc validation :)
 
 //const User = mongoose.model('', {...}) was cut and pasted in /db/user.js
 
-
 //const task = mongoose.model(...) cut and pasted in/db/task.js
-
 
 // const me = new User({
 //     name: 'Danav',
 //     email: 'manav.gussain@gmail.com',
 //     password: '    xqyzbac1123   '
 // })
-
 
 // const taskMe = new Task({
 //     description: '    eat lunch   ',

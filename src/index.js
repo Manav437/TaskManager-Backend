@@ -1,15 +1,14 @@
 // /Users/manavgusain/mongoDB/bin/mongod --dbpath=/Users/manavgusain/mongoDB-data
 
 //initialising point of our app
-import express from "express"
-import "./db/mongoose.js"
-import userRouter from "./routers/user.js"
-import taskRouter from './routers/task.js '
+import express from "express";
+import "./db/mongoose.js";
+import userRouter from "./routers/user.js";
+import taskRouter from "./routers/task.js ";
 import cors from "cors";
 
-
-const app = express()
-const port = process.env.PORT || 3000
+const app = express();
+const port = process.env.PORT || 3000;
 
 //use of middleware :  new request ---> do something ---> run route handler
 // app.use((req, res, next) => {
@@ -30,7 +29,7 @@ app.use(
         origin: "https://taskmanager-frontend-2qcg.onrender.com", // Allow requests from your frontend
         methods: "GET,POST,PATCH,PUT,DELETE", // Allowed request methods
         credentials: true, // Allow cookies & authentication headers
-    })
+    }),
 );
 
 // app.use(
@@ -38,14 +37,14 @@ app.use(
 //         origin: "http://localhost:5173",
 //         methods: "GET,POST,PATCH,PUT,DELETE",
 //         credentials: true,
-//     })
+//     }),
 // );
 
-app.get('/', (req, res) => {
-    res.send('Backend is running!');
+app.get("/", (req, res) => {
+    res.send("Backend is running!");
 });
 
-app.use(express.json())         //in postman under body data was sent but in order to catch it we use this line
+app.use(express.json()); //in postman under body data was sent but in order to catch it we use this line
 
 //router example---> how to use router
 // const router = new express.Router()                 // create a router
@@ -53,8 +52,8 @@ app.use(express.json())         //in postman under body data was sent but in ord
 //     res.send('this is from other router')
 // })
 
-app.use(userRouter)                                     // regsiter with express application
-app.use(taskRouter)
+app.use(userRouter); // regsiter with express application
+app.use(taskRouter);
 
 //initially all the requests were done using promise chaining but then converted to async-await functions
 
@@ -62,13 +61,11 @@ app.use(taskRouter)
 
 //tasks routes moved to src/routers/task.js
 
-
 //securely storing passwords ---> using bcryptjs
 
 app.listen(port, () => {
-    console.log('Server is up on ' + port)
-})
-
+    console.log("Server is up on " + port);
+});
 
 // import bycrypt from 'bcryptjs'
 // import jwt from 'jsonwebtoken'
@@ -85,7 +82,7 @@ app.listen(port, () => {
 // const isMatch = await bycrypt.compare('Red12345!', hashedPassword)      //true if given pass matches with hashedPass stored in databse, else false
 // console.log(isMatch)
 
-//first arg is object to check in databse, second is a string(secret),secret has to same for sign() and verify() 
+//first arg is object to check in databse, second is a string(secret),secret has to same for sign() and verify()
 // const token = jwt.sign({ _id: 'abc123' }, 'thisismynewtoken', { expiresIn: '7 days' })              //to create a new jwt token
 // console.log(token)            //o/p --> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 //a                            //.eyJfaWQiOiJhYmMxMjMiLCJpYXQiOjE3Mzk5NDc2ODN9
@@ -96,7 +93,6 @@ app.listen(port, () => {
 // }
 
 // myFxn()
-
 
 // import Task from "./models/task.js"
 // import User from "./models/user.js"
@@ -112,7 +108,6 @@ app.listen(port, () => {
 // }
 
 // main()
-
 
 // import multer from "multer"
 
