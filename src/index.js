@@ -32,6 +32,19 @@ app.use(
     }),
 );
 
+app.get("/", (req, res) => {
+    res.send("Backend is running!");
+});
+
+app.use(express.json()); //in postman under body data was sent but in order to catch it we use this line
+
+app.use(userRouter); // regsiter with express application
+app.use(taskRouter);
+
+app.listen(port, () => {
+    console.log("Server is up on " + port);
+});
+
 // app.use(
 //     cors({
 //         origin: "http://localhost:5173",
@@ -40,11 +53,6 @@ app.use(
 //     }),
 // );
 
-app.get("/", (req, res) => {
-    res.send("Backend is running!");
-});
-
-app.use(express.json()); //in postman under body data was sent but in order to catch it we use this line
 
 //router example---> how to use router
 // const router = new express.Router()                 // create a router
@@ -52,8 +60,7 @@ app.use(express.json()); //in postman under body data was sent but in order to c
 //     res.send('this is from other router')
 // })
 
-app.use(userRouter); // regsiter with express application
-app.use(taskRouter);
+
 
 //initially all the requests were done using promise chaining but then converted to async-await functions
 
@@ -63,9 +70,7 @@ app.use(taskRouter);
 
 //securely storing passwords ---> using bcryptjs
 
-app.listen(port, () => {
-    console.log("Server is up on " + port);
-});
+
 
 // import bycrypt from 'bcryptjs'
 // import jwt from 'jsonwebtoken'
